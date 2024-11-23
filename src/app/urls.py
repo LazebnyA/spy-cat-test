@@ -17,7 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from spy_cat import urls as spy_cat_urs
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
+    path('api/', spy_cat_urs)
 ]
