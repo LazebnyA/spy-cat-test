@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from models import SpyCat, Mission, Target
+from spy_cat.models import SpyCat, Mission, Target
 
 
 class SpyCatSerializer(serializers.ModelSerializer):

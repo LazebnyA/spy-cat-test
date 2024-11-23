@@ -1,8 +1,8 @@
 from rest_framework import generics, viewsets, status
 from rest_framework.response import Response
 
-from models import SpyCat, Mission, Target
-from serializers import SpyCatSerializer, MissionSerializer, TargetSerializer
+from spy_cat.models import SpyCat, Mission, Target
+from spy_cat.serializers import SpyCatSerializer, MissionSerializer, TargetSerializer
 
 
 class SpyCatViewSet(viewsets.ModelViewSet):
