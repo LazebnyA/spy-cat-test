@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from spy_cat.models import SpyCat, Mission, Target
 from config import VALID_BREEDS
@@ -16,9 +17,11 @@ class SpyCatSerializer(serializers.ModelSerializer):
 
 
 class TargetSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
+
     class Meta:
         model = Target
-        exclude = ("mission",)
+        fields = "__all__"
 
 
 class MissionSerializer(serializers.ModelSerializer):
@@ -41,7 +44,10 @@ class MissionSerializer(serializers.ModelSerializer):
 
         for target_data in targets_data:
             target = Target.objects.get(id=target_data["id"], mission=instance)
+            is_completed_target = target.is_completed
             for attr, value in target_data.items():
+                if attr == "notes" and is_completed_target:
+                    raise ValidationError(f"You cannot change notes, mission is already completed.")
                 setattr(target, attr, value)
             target.save()
 

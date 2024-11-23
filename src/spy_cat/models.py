@@ -11,24 +11,26 @@ class SpyCat(models.Model):
     
     def __str__(self):
         return self.name
-    
+
 
 class Mission(models.Model):
     cat = models.OneToOneField(
-        SpyCat, 
-        null=True, blank=True, 
+        SpyCat,
+        null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         related_name="current_mission"
     )
     is_completed = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-        if self.targets.exists() and all(target.is_completed for target in self.targets.all()):
-            self.is_completed = True
-        else:
-            raise ValidationError("All targets must be completed before marking the mission as completed.")
-        super().save(*args, **kwargs)
+        if self.pk and self.targets.exists():
+            if all(target.is_completed for target in self.targets.all()):
+                self.is_completed = True
+            elif self.is_completed:
+                raise ValidationError("All targets must be completed before marking the mission as completed.")
 
+        super().save(*args, **kwargs)
     def __str__(self):
         return f"Mission ({'Completed' if self.is_completed else 'In Progress'})"
 
