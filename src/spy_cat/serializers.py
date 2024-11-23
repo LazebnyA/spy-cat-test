@@ -1,12 +1,18 @@
 from rest_framework import serializers
 
 from spy_cat.models import SpyCat, Mission, Target
+from config import VALID_BREEDS
 
 
 class SpyCatSerializer(serializers.ModelSerializer):
     class Meta:
         model = SpyCat
         fields = "__all__"
+
+    def validate_breed(self, value):
+        if not any(breed.lower() == value.lower() for breed in VALID_BREEDS):
+            raise serializers.ValidationError("Invalid breed.")
+        return value
 
 
 class TargetSerializer(serializers.ModelSerializer):

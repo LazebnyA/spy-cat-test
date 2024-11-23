@@ -8,10 +8,6 @@ class SpyCat(models.Model):
     years_of_experience = models.PositiveIntegerField()
     breed = models.CharField(max_length=100)
     salary = models.DecimalField(max_digits=10, decimal_places=2)
-
-    def clean(self):
-        if self.breed not in VALID_BREEDS:
-            raise ValidationError(f"{self.breed} is not a valid breed.")
     
     def __str__(self):
         return self.name
