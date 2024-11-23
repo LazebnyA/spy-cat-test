@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure--f&i!95u2$se^b4)(y_qz*#z3r2@p=z1(5d5tn=x13%upzyto(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['spy-cat-test.onrender.com']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', 'spy-cat-test.onrender.com']
 
 
 # Application definition
